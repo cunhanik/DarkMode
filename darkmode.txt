@@ -1,0 +1,293 @@
+Abrimos o VScode e:
+-Criamos uma pasta "js" com o ficheiro "script.js"
+-Criamos uma pasta "css" com o ficheiro "style.css"
+-Criamos uma pasta "img" com a imagem que queremos, vou deixar 2 como exemplo e vou escolher só uma delas: Redimensionar a img para: 825x341
+-Criamos o ficheiro "index.html" e começamos:
+
+html:5
+-Mudamos o titulo: <title>Dark Mode</title>
+-Acrescentamos a ligação para o css e o javascript(a carregar depois do html-> defer):
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/script.js" defer></script>
+
+O codigo fica:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/script.js" defer   ></script>
+</head>
+<body>
+    
+</body>
+</html>
+
+
+
+Agora vamos ao google para pesquisarmos: bootstrap icons
+https://icons.getbootstrap.com/
+
+Carregamos em "install" e somos movimos para uma parte específica da pagina
+Copiamos o CDN: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+Agora colamos por cima da nossa ligação ao css <link rel="stylesheet" href="/css/style.css">
+Feito isto, temos acesso ao bootstrap icons.
+
+Então, no html:
+-Criar <header> com:
+	-titulo <h2>Light and Dark</h2>
+	-div <div> com:
+		-botão checkbox <input type="checkbox" name="change-theme" id="change-theme">
+		-label <label for="change-theme"> com:
+			-icon <i class="bi bi-sun"></i>
+			-icon <i class="bi bi-moon"></i>
+-Criar <main> com:
+	-div <div class="card"> com:
+		-div <div class="card-image"> com:
+			-span <span>Casa</span>
+			-img <img src="/img/pexels-quang-nguyen-vinh-11669971.jpg" alt="Casa para vender">
+		-div <div class="card-details"> com:
+			-titulo <h2>Vivenda Incrivel</h2>
+			-paragrafo <p class="subtitle">Excelente para casa de férias</p>
+			-paragrafo <p class="description">Casa de férias incrivel com:</br>
+			  -5 WC </br>
+                    -4 quartos </br>
+                    -2 salas (jantar e convívio) </br>
+                    -1 cozinha (muito grande) </br>
+                    -1 sala de cinema </br>
+                    -1 Jacuzzi </br>
+                    -1 piscina<p>
+		-div <div class="price-container"> com:
+			-span <span class="price">2000000€</span>
+			-botão <button class="btn">Comprar</button>
+
+
+Vamos ao nosso css:
+
+*{																			
+    font-family: helvetica;															//tipo de letra helvetica
+    padding: 0;																	//espaçamento 0
+    margin: 0;																	//margem 0
+    box-sizing: border-box;															//border box-> Para os elementos não passarem a borda do seu limite
+}
+
+html,body{
+    height: 100%;																	//altura 100%
+    background-color: #ECEFF1;														//cor de fundo (cor default do light mode)
+    transition: 0.3s;																//transição de 0.3segundos
+}
+
+input[type="checkbox"]{
+    display: none;																//display none-> tirar a caixa do checkbox
+}
+
+/* Dark Theme */
+.dark, .dark header{																//Parte do dark mode
+    background-color: #263238;														//cor de fundo (cor default do dark mode)
+    color: white;																	//cor da letra branca
+}
+
+
+Vamos ao Javascript:
+-Criamos uma constante com ligação ao botão checkbox "change-theme" const changeThemeBtn = document.getElementById("change-theme")
+-Criamos um evento changeThemeBtn.addEventListener("change", function(){ com:
+	- document.body.classList.toggle("dark")
+})
+
+const changeThemeBtn = document.querySelector("#change-theme"); / const changeThemeBtn = document.getElementById("change-theme");
+
+changeThemeBtn.addEventListener("change", function(){
+    document.body.classList.toggle("dark")
+});
+
+resumindo isto: 
+	Temos a nossa constante que faz ligação à div "change-theme"(checkbox), depois adicionamos um evento "change" à nossa constante com ligação à div, com uma função que faz:
+	Quando clicarmos na nossa div, o nosso body ganha a class "dark", quando a class "dark" está ativa e clicamos, o nosso body perde a class "dark" -TOGGLE-
+
+
+Voltando ao css, antes do /*Dark Theme */ acrescentamos:
+
+.bi {
+    font-size: 1.3rem;											//Tamanho da letra 1.3rem(rootelement->html) Ajuda a ter um controlo melhor sobre os tamanhos aplicados
+    cursor: pointer											//para quando o utilizador passa o rato por cima dos icons
+}
+
+.bi-sun{
+    display: none;											//display none para tirar o icon do sol, quando estivermos no light mode
+}
+
+header{
+    display: flex;											//display flex
+    justify-content: space-between;									//Titulos para a esquerda, icons para a direita
+    align-items: center;										//alinhar items na vertical para o centro
+    background-color: #ECEFF1;									//cor de fundo
+    box-shadow: 0.5px 0.5px 10px 0.5px black;							//sombra por baixo 
+    padding: 1rem 2rem;											//espaçamento de 1rem 2rem
+    position: relative;											//posição relativa para garatirmos que a box shadow seja sempre exibida
+}
+
+main{
+    display: flex;											//display flex
+    justify-content: center;										//centralizar o card do main
+}
+
+.card{
+    margin-top: 4rem;											//margem de cima 4em
+    display: flex;											//display flex
+    width: 60%;												//largura 60% para ajudar a centralizar o elemento
+    background-color: white;										//cor de fundo branca
+    box-shadow: 5px 5px 5px 0px rgb(0, 0, 0, 0.3);						//sombra por baixo (opacidade 0.3) (Primeiros 2x 5px -> laterais) (terceiro 5px é o spread-espalhamento) 
+}
+
+.card-image{
+    padding: 2rem;											//espaçamento 2rem
+    width: 50%;												//largura 50%
+    position: relative;											//posição relative
+    background-color: #eff7fc;									//cor de fundo cinza
+}
+
+.card-image, .card-details{
+    padding: 2rem;											//espaçamento 2rem
+    width: 50%;												//largura 50%
+}
+
+.card-image span{
+    padding-left: 70px;											//espaçamento esquerdo 70px
+    font-size: 6rem;											//tamanho da letra 6ren
+    font-weight: 900;											//grossura da letra 900
+}
+
+.card img{
+    width: 105%;												//largura 105%
+    height: 70%;												//altura 70%
+    padding-right: 1rem;  										//espaçamento do lado direito 1rem
+}
+
+.card-details h2{
+    text-align: center;											//texto alinhado ao centro
+    font-size: 3rem ;											//tamanho da letra 3rem
+    margin-bottom: 1rem;										//margem de baixo 1rem
+}
+
+.subtitle{
+    color: #444;												//cor da letra cinza
+    text-transform: uppercase;									//texto em maiusculo			
+    font-weight: bold											//grossura da letra negrito
+    margin-bottom: 1rem;										//margem de baixo 1rem
+}
+
+.description{
+    line-height: 1.6rem;										//linha horizontal 1.6 rem (distancia entre as linhas)
+    margin-bottom: 2rem;										//margem de baixo 2rem
+}
+
+.price-container{
+    display: flex;											//display flex
+    justify-content: space-between;									//preço para um lado, botão para o outro
+}
+
+.price{
+    font-weight: 900;											//grossura quase negrito
+    font-size: 2rem;											//tamanho da letra 2rem
+}
+
+.btn{
+    background-color: #444;										//cor de fundo cinza
+    width: 7rem;												//largura 7rem
+    height: 3rem;												//altura 3rem
+    border: none;												//tirar borda
+    border-radius: 3rem;										//borda redondinha
+    color: white;												//cor da letra branca
+    text-transform: uppercase;									//texto em maiusculo
+    cursor: pointer;											//cursor pointer para quando o utilizador passa o rato por cima
+}
+
+
+No /* Dark Theme */ acrescentamos:
+
+.dark .bi-sun{
+    display: block;											//display block para aparecer
+}
+
+.dark .bi-moon{
+    display: none;											//tirar o display da lua para nao aparecer o icon
+}
+
+.dark .card{
+    background-color: #37474f;									//cor de fundo dark escuro
+}
+
+.dark .card-image{
+    background-color: #273035;									//cor de fundo dark mais claro 
+}
+
+.dark .subtitle{
+    color: #67b4f3											//cor da letra azul
+}
+
+.dark .description{
+    color: 2196f3;											//cor da letra azul
+}
+
+.dar .btn{
+    background-color: #67b4f3;									//cor de fundo azul
+}
+
+
+
+Agora no javascript para deixar o nosso codigo mais limpo:
+-Criamos uma constante com ligação à div "change-theme": const changeThemeBtn = document.getElementById("change-theme")
+-Criamos uma função: function toggleDarkMode(){
+	-que ativa a class "dark" no nosso body: document.body.classList.toggle("dark")}
+-Aproveitamos o evento que tinhamos criado antes: changeThemeBtn.addEventListener("change", fucntion(){
+	-recebe a função que criamos em cima: toggleDarkMode()
+	-Remover o darkmode da local storage, para evitar o else (do if de baixo) e colocar o codigo mais limpo: localStorage.removeItem("dark");
+	-Criamos um if para verificar SE o body contem (contains) a class "dark": if(document.body.classList.contains("dark")){
+		-Se tiver a class dark, vamos dar ao localStorage set item (1): localStorage.setItem("dark",1)
+-Criamos uma função (loadTheme()) que tem:
+	-Uma constante que vai aceder ao localstorage.getItem e vai procurar o ("dark"): const darkMode = localStorage.getitem("dark")
+	-Criar um if para verificar se o darkmode existe: if(darkMode){
+		-Se existir, executa a nossa função toggleDarkMode(): toggleDarkMode()
+-executar a função loadTheme(): loadTheme()
+
+
+const changeThemeBtn = document.getElementById("change-theme");
+
+// Toggle dark mode
+function toggleDarkMode(){
+    document.body.classList.toggle("dark")
+}
+
+changeThemeBtn.addEventListener("change", function(){
+    toggleDarkMode();
+
+    // Save or remove dark mode
+    localStorage.removeItem("dark");
+
+    if(document.body.classList.contains("dark")){
+        localStorage.setItem("dark",1);
+    }
+});
+
+// Load light or dark mode
+function loadTheme(){
+    const darkMode = localStorage.getItem("dark")
+
+    if(darkMode){
+        toggleDarkMode();
+    }
+}
+
+loadTheme()
+
+
+resumindo:
+Ao clicarmos no botão (icon), ele ativa ou desativa o darkmode.
+Quando ativado, o localStorage recebe o item "dark" valor 1
+Quando desativado, o localStorage remove o item "dark" e ficamos com o valor null
+Quando abrimos o site, se o valor do localStorage estiver a 1, ele ativa o DarkMode
+			     se o valor do localStorage for null, ele desativa o DarkMode
